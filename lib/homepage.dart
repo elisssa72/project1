@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'flipcardgame.dart';
+import 'data.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -17,7 +19,11 @@ class _HomePageState extends State<HomePage> {
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
-
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => _list[index].goto,
+                    ));
               },
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -111,6 +117,7 @@ class Details {
   String name;
   Color primarycolor;
   Color secomdarycolor;
+  Widget goto;
   int noOfstar;
 
   Details(
@@ -118,26 +125,26 @@ class Details {
         required this.primarycolor,
         required this.secomdarycolor,
         required this.noOfstar,
-      });
+        required this.goto});
 }
 
 List<Details> _list = [
   Details(
-    name: "EASY",
-    primarycolor: Colors.green,
-    secomdarycolor: Colors.green[300]!,
-    noOfstar: 1,
-  ),
+      name: "EASY",
+      primarycolor: Colors.green,
+      secomdarycolor: Colors.green[300]!,
+      noOfstar: 1,
+      goto: FlipCardGane(Level.Easy)),
   Details(
-    name: "MEDIUM",
-    primarycolor: Colors.orange,
-    secomdarycolor: Colors.orange[300]!,
-    noOfstar: 2,
-  ),
+      name: "MEDIUM",
+      primarycolor: Colors.orange,
+      secomdarycolor: Colors.orange[300]!,
+      noOfstar: 2,
+      goto: FlipCardGane(Level.Medium)),
   Details(
-    name: "HARD",
-    primarycolor: Colors.red,
-    secomdarycolor: Colors.red[300]!,
-    noOfstar: 3,
-  )
+      name: "HARD",
+      primarycolor: Colors.red,
+      secomdarycolor: Colors.red[300]!,
+      noOfstar: 3,
+      goto: FlipCardGane(Level.Hard))
 ];
