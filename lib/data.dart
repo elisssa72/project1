@@ -66,7 +66,7 @@ List<bool> getInitialItemState(Level level) {
 List<GlobalKey<FlipCardState>> getCardStateKeys(Level level) {
   List<GlobalKey<FlipCardState>> cardStateKeys =
   [];
-  if (level == Level.Hard) {
+  if (level == Level.Hard) {            //addcards
     for (int i = 0; i < 18; i++) {
       cardStateKeys.add(GlobalKey<FlipCardState>());
     }

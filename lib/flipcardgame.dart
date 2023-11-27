@@ -51,7 +51,7 @@ class _FlipCardGaneState extends State<FlipCardGane> {
     );
   }
 
-  void startTimer() {
+  void startTimer() {   //function to count down
     _timer = Timer.periodic(Duration(seconds: 1), (t) {
       setState(() {
         _time = _time - 1;
@@ -67,8 +67,8 @@ class _FlipCardGaneState extends State<FlipCardGane> {
     _cardFlips = getInitialItemState(_level);
     _cardStateKeys = getCardStateKeys(_level);
     _time = 5;
-    _left = (_data.length ~/ 2);
-    _isFinished = false;
+    _left = (_data.length ~/ 2);   //nb of pairs left
+    _isFinished = false;  //not finished
     Future.delayed(Duration(seconds: 6), () {
       setState(() {
         _start = true;
@@ -78,7 +78,7 @@ class _FlipCardGaneState extends State<FlipCardGane> {
   }
 
   @override
-  void initState() {
+  void initState() {   //assure game is set to inital state when the widget is created
     super.initState();
 
     restart();
@@ -86,12 +86,12 @@ class _FlipCardGaneState extends State<FlipCardGane> {
 
   @override
   void dispose() {
-    super.dispose();
+    super.dispose(); //cleanup
   }
 
   @override
   Widget build(BuildContext context) {
-    return _isFinished
+    return _isFinished   //if true
         ? Scaffold(
       body: Center(
 
@@ -116,20 +116,20 @@ class _FlipCardGaneState extends State<FlipCardGane> {
 
       ),
     )
-        : Scaffold(
+        : Scaffold(           //else
       body: SafeArea(
-        child: SingleChildScrollView(
+        child: SingleChildScrollView(  //allow scrolling
           child: Column(
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: _time > 0
+                child: _time > 0             //if time>0
                     ? Text(
-                  '$_time',
+                  '$_time',                       //print(time)
                   style: Theme.of(context).textTheme.headline3,
                 )
                     : Text(
-                  'Left: $_left',
+                  'Left: $_left',                   //show the countdown
                   style: Theme.of(context).textTheme.headline3,
                 ),
               ),
@@ -151,7 +151,7 @@ class _FlipCardGaneState extends State<FlipCardGane> {
                         } else {
                           _flip = false;
                           if (_previousIndex != index) {
-                            if (_data[_previousIndex] != _data[index]) {
+                            if (_data[_previousIndex] != _data[index]) {           //compare
                               _wait = true;
 
                               Future.delayed(const Duration(milliseconds: 1500), () {
@@ -170,11 +170,11 @@ class _FlipCardGaneState extends State<FlipCardGane> {
                               });
                             } else {
                               _cardFlips[_previousIndex] = false;
-                              _cardFlips[index] = false;
+                              _cardFlips[index] = false;     //are shown not closed
                               print(_cardFlips);
 
                               setState(() {
-                                _left -= 1;
+                                _left -= 1;               //left is decreased by 1
                               });
                               if (_cardFlips.every((t) => t == false)) {
                                 print("Won");
