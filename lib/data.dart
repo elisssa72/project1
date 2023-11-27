@@ -64,20 +64,20 @@ List<bool> getInitialItemState(Level level) {
 }
 
 List<GlobalKey<FlipCardState>> getCardStateKeys(Level level) {
-  List<GlobalKey<FlipCardState>> cardStateKeys =
+  List<GlobalKey<FlipCardState>> card =
   [];
   if (level == Level.Hard) {            //addcards
     for (int i = 0; i < 18; i++) {
-      cardStateKeys.add(GlobalKey<FlipCardState>());
+      card.add(GlobalKey<FlipCardState>());
     }
   } else if (level == Level.Medium) {
     for (int i = 0; i < 12; i++) {
-      cardStateKeys.add(GlobalKey<FlipCardState>());
+      card.add(GlobalKey<FlipCardState>());
     }
   } else if (level == Level.Easy) {
     for (int i = 0; i < 6; i++) {
-      cardStateKeys.add(GlobalKey<FlipCardState>());
+      card.add(GlobalKey<FlipCardState>());
     }
   }
-  return cardStateKeys;
+  return card;
 }

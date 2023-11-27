@@ -28,9 +28,9 @@ class _FlipCardGaneState extends State<FlipCardGane> {
   int _time = 5;
   // int _left;
   // bool _isFinished;
-  List<String> _data = [];
-  List<bool> _cardFlips = [];
-  List<GlobalKey<FlipCardState>> _cardStateKeys = [];
+  List<String> _dataimages = [];
+  List<bool> _cardstate = [];
+  List<GlobalKey<FlipCardState>> _cardnb = [];
 
   Widget getItem(int index) {
     return Container(
@@ -40,14 +40,14 @@ class _FlipCardGaneState extends State<FlipCardGane> {
           BoxShadow(
             color: Colors.black45,
             blurRadius: 3,
-            spreadRadius: 0.8,
+            spreadRadius: 0.9,
             offset: Offset(2.0, 1),
           )
         ],
         borderRadius: BorderRadius.circular(5),
       ),
       margin: EdgeInsets.all(4.0),
-      child: Image.asset(_data[index]),
+      child: Image.asset(_dataimages[index]),
     );
   }
 
@@ -61,13 +61,13 @@ class _FlipCardGaneState extends State<FlipCardGane> {
 
   void restart() {
     startTimer();
-    _data = getSourceArray(
+    _dataimages = getSourceArray(
       _level,
     );
-    _cardFlips = getInitialItemState(_level);
-    _cardStateKeys = getCardStateKeys(_level);
+    _cardstate= getInitialItemState(_level);
+    _cardnb = getCardStateKeys(_level);
     _time = 5;
-    _left = (_data.length ~/ 2);   //nb of pairs left
+    _left = (_dataimages.length ~/ 2);   //nb of pairs left
     _isFinished = false;  //not finished
     Future.delayed(Duration(seconds: 6), () {
       setState(() {
@@ -143,7 +143,7 @@ class _FlipCardGaneState extends State<FlipCardGane> {
                   ),
                   itemBuilder: (context, index) => _start
                       ? FlipCard(
-                      key: _cardStateKeys[index],
+                      key: _cardnb[index],
                       onFlip: () {
                         if (!_flip) {
                           _flip = true;
@@ -151,15 +151,15 @@ class _FlipCardGaneState extends State<FlipCardGane> {
                         } else {
                           _flip = false;
                           if (_previousIndex != index) {
-                            if (_data[_previousIndex] != _data[index]) {           //compare
+                            if (_dataimages[_previousIndex] != _dataimages[index]) {           //compare
                               _wait = true;
 
                               Future.delayed(const Duration(milliseconds: 1500), () {
-                                _cardStateKeys[_previousIndex]
+                                _cardnb[_previousIndex]
                                     .currentState
                                     ?.toggleCard();
                                 _previousIndex = index;
-                                _cardStateKeys[_previousIndex].currentState?.toggleCard();
+                                _cardnb[_previousIndex].currentState?.toggleCard();
 
                                 Future.delayed(
                                     const Duration(milliseconds: 160), () {
@@ -169,14 +169,14 @@ class _FlipCardGaneState extends State<FlipCardGane> {
                                 });
                               });
                             } else {
-                              _cardFlips[_previousIndex] = false;
-                              _cardFlips[index] = false;     //are shown not closed
-                              print(_cardFlips);
+                              _cardstate[_previousIndex] = false;
+                              _cardstate[index] = false;     //are shown not closed
+                              print(_cardstate);
 
                               setState(() {
                                 _left -= 1;               //left is decreased by 1
                               });
-                              if (_cardFlips.every((t) => t == false)) {
+                              if (_cardstate.every((t) => t == false)) {
                                 print("Won");
                                 Future.delayed(
                                     const Duration(milliseconds: 160), () {
@@ -191,7 +191,7 @@ class _FlipCardGaneState extends State<FlipCardGane> {
                         }
                         setState(() {});
                       },
-                      flipOnTouch: _wait ? false : _cardFlips[index],
+                      flipOnTouch: _wait ? false : _cardstate[index],
                       direction: FlipDirection.HORIZONTAL,
                       front: Container(
                         decoration: BoxDecoration(
@@ -216,7 +216,7 @@ class _FlipCardGaneState extends State<FlipCardGane> {
                       ),
                       back: getItem(index))
                       : getItem(index),
-                  itemCount: _data.length,
+                  itemCount: _dataimages.length,
                 ),
               ),
             ],
